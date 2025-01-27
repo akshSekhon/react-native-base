@@ -18,3 +18,14 @@ export const getStyles = (context: typeof ThemeContext) => {
     const styles: StyleFilesType = { lang, colors, textStyles, comnViewStyles }
     return styles
 }
+
+
+export const useStyles = () => {
+    try {
+        return getStyles(ThemeContext)
+    } catch (error) {
+        throw new Error(
+            "getStyles must be used within a React component that is wrapped in ThemeProvider."
+        );
+    }
+};

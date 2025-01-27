@@ -22,11 +22,13 @@ interface Props {
     onPressPremium?: () => void
     leftTitle?: string | null,
     isLeftTitle?: boolean
+    isLeftImage?: boolean
 }
 
 const TabbarHeader: FC<Props> = ({
     isLeftTitle = true,
     leftTitle,
+    isLeftImage = true,
     ...props }) => {
     const navigation = useNavigation()
     const route = getCurrentRoute()
@@ -51,6 +53,15 @@ const TabbarHeader: FC<Props> = ({
         <View style={{ ...comnViewStyles.rowContainer_A_C, paddingHorizontal: moderateScale(10), paddingVertical: moderateScaleVertical(1) }}>
 
             <View style={{ ...comnViewStyles.rowContainer_A_C, flex: 1 }} >
+                {isLeftImage &&
+                    <Touchable
+                        onPress={props.onPressProfile ?? goBack}
+                    // style={{ ...styles.getPremButton, backgroundColor: colors.bg_action }}
+                    >
+                        <ImageHelper.svgs.Angle_left />
+                    </Touchable>
+
+                }
                 {isLeftTitle &&
                     <Text_N style={{ ...textStyles.title_small }}>{!!leftTitle ? leftTitle : screenTitle ?? ''}</Text_N>
                 }

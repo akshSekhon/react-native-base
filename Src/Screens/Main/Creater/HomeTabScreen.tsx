@@ -1,24 +1,26 @@
-import { useIsFocused } from '@react-navigation/native'
-import React, { FC, useEffect } from 'react'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
+import React, { FC, useEffect, useState } from 'react'
 import { FlatList, Image, ListRenderItemInfo, StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import SystemNavigationBar from 'react-native-system-navigation-bar'
-import ImageHelper from '../../../Assets/Gallery/ImageHelper'
-import { getStyles } from '../../../CommonStyles'
+// import ImageHelper from '@Gallery/ImageHelper'
+import { getStyles } from '../../../CommonStyles/index'
 import { shadowBox } from '../../../CommonStyles/CommonViewStyles'
 import { moderateScale, moderateScaleVertical } from '../../../CommonStyles/responsiveSize'
-import { WrapperContainer } from '../../../Components'
-import CustomButton from '../../../Components/CustomButton'
-import TabbarHeader from '../../../Components/Headers/TabbarHeader'
-import LineView from '../../../Components/LineView'
-import LoaderImage from '../../../Components/LoaderImage'
-import { RadialGradientView } from '../../../Components/RadialGradientView'
-import SearchBar from '../../../Components/SearchBar'
-import SegmentView from '../../../Components/SegmentView'
-import Text_N from '../../../Components/TextComponents/Text_N'
-import WishlistButton from '../../../Components/WishlistButton'
+import { RadialGradientView, WrapperContainer, CustomButton, TabbarHeader, LineView, LoaderImage, SegmentView, Text_N } from '../../../Components'
+import ProjectItemCard from '../SharedComponents/ProjectItemCard'
+// import { ThemeContext, useUser } from '@Providers/index'
+import BrandCardItem from './Components/BrandCardItem'
 import { ThemeContext } from '../../../Providers/ThemeProvider'
-import ProjectItemCard from './../Components/ProjectItemCard'
+import { useUser } from '../../../Providers/UserProvider'
+// import { pushTo } from '@Src/Navigations/NavigationService'
+// import { pushTo } from '@Src'
+
+// import { pushTo } from 'Navigations/NavigationService'
+import { pushTo } from '../../../Navigations/NavigationService'
+import ImageHelper from '../../../Assets/Gallery/ImageHelper'
+
+// import { ThemeContext, useUser } from 'Src/Providers'
 
 const MakeConnectionsView = () => {
     const { lang, colors, textStyles, comnViewStyles } = getStyles(ThemeContext)
@@ -64,12 +66,15 @@ const MakeConnectionsView = () => {
     )
 }
 
-
-
-
 const HomeTabScreen: FC<any> = () => {
     const { lang, colors, textStyles, comnViewStyles } = getStyles(ThemeContext)
     const isFocused = useIsFocused()
+    const navigation = useNavigation()
+    const [selectedTab, setSelectedTab] = useState({ title: lang.Best_Matches, id: 0 })
+
+    const { profileType } = useUser()
+    console.log('profileType creater is:----', profileType);
+
     useEffect(() => {
         SystemNavigationBar.setNavigationColor(colors.appBg, 'light', 'navigation')
     }, [isFocused]);
@@ -83,29 +88,32 @@ const HomeTabScreen: FC<any> = () => {
     ]
     const brandItem = ({ item }) => {
         return (
-            <View>
-                <View style={{
-                    ...shadowBox({}),
-                    height: 120,
-                    width: 100,
-                    borderRadius: 5,
-                    backgroundColor: colors.appBg,
-                    paddingBottom: moderateScaleVertical(5),
-                    overflow: 'hidden'
-                }}>
+            <BrandCardItem
+                onPressCard={() => pushTo('BrandDetail')}//
+                item={item} />
+            // <View>
+            //     <View style={{
+            //         ...shadowBox({}),
+            //         height: 120,
+            //         width: 100,
+            //         borderRadius: 5,
+            //         backgroundColor: colors.appBg,
+            //         paddingBottom: moderateScaleVertical(5),
+            //         overflow: 'hidden'
+            //     }}>
 
-                    <LoaderImage
-                        uri={item?.image}
-                        resizeMode='cover'
-                        style={{ flex: 1, }}
-                    />
+            //         <LoaderImage
+            //             uri={item?.image}
+            //             resizeMode='cover'
+            //             style={{ flex: 1, }}
+            //         />
 
-                    <LoaderImage
-                        uri={item?.icon}
-                        style={{ height: moderateScale(25) }}
-                    />
-                </View>
-            </View>
+            //         <LoaderImage
+            //             uri={item?.icon}
+            //             style={{ height: moderateScale(25) }}
+            //         />
+            //     </View>
+            // </View>
         )
     }
 
@@ -125,6 +133,9 @@ const HomeTabScreen: FC<any> = () => {
             </View>
         )
     }
+
+
+
     const projectItem = (item: ListRenderItemInfo<any>) => {
 
         return <ProjectItemCard containerStyle={{ ...comnViewStyles.hzPadContainer, }} />
@@ -141,10 +152,10 @@ const HomeTabScreen: FC<any> = () => {
 
                     {/* MARK:- Search view */}
                     <View style={{ ...comnViewStyles.rowContainer_A_C, gap: moderateScale(10) }}>
-                        <SearchBar
+                        {/* <SearchBar
                             placeholder={lang?.Search_for_Collaborations}
                             containerStyle={{ flex: 1 }} />
-                        <WishlistButton />
+                        <WishlistButton /> */}
                     </View>
                 </View>
                 <Animated.FlatList
@@ -182,7 +193,8 @@ const HomeTabScreen: FC<any> = () => {
                             return (
                                 <View style={{ ...comnViewStyles.hzPadContainer, backgroundColor: colors.appBg }}>
                                     <SegmentView
-                                        defaultSelected={{ title: lang.Best_Matches, id: 0 }}
+                                        defaultSelected={selectedTab}
+                                        onSelectItem={(item) => setSelectedTab(item)}
                                         tabItems={[
                                             { title: lang.Best_Matches, id: 0 },
                                             { title: lang.Open_Projects, id: 1 },
@@ -197,7 +209,7 @@ const HomeTabScreen: FC<any> = () => {
                         return projectItem(item);
                     }}
                     // data={Array(100)}
-                    data={[{ type: 'segment' }, { type: 'horizList' }, ...Array(2).fill({ type: 'item' })]}
+                    data={selectedTab.id == 1 ? [{ type: 'segment' }, ...Array(2).fill({ type: 'item' })] : [{ type: 'segment' }, { type: 'horizList' }, ...Array(2).fill({ type: 'item' })]}
                     renderScrollComponent={(props) => <Animated.ScrollView {...props} />} // For animations
                 />
             </View>

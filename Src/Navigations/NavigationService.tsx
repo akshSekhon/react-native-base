@@ -1,7 +1,6 @@
 // import { StackActions } from "@react-navigation/compat";
-import { CommonActions, createNavigationContainerRef, NavigationContainerRef, NavigationState, RouteProp, useRoute, } from "@react-navigation/native";
-import { NaviScreen } from "./navigations";
-import { RouteParamList } from "./routes.type";
+import { CommonActions, createNavigationContainerRef, NavigationContainerRef, NavigationState, PartialState, RouteProp, StackActions, useRoute, } from "@react-navigation/native";
+import { RouteParamList, RouteStackParams } from "./routes.type";
 import React from "react";
 import { isFalsy } from "../Utils";
 /**
@@ -70,13 +69,10 @@ const getPreviousRoute = () => {
  * @param routeName The name of the route to navigate to. Routes are defined in RootScreen using createStackNavigator()
  * @param params Route parameters.
  */
-async function navigate(name, params) {
+async function navigate<T extends keyof RouteParamList>(name: T, params: RouteParamList[T]) {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(
-      CommonActions.navigate({
-        name,
-        params,
-      })
+      StackActions.push(name, params)
     );
   }
 }
@@ -110,28 +106,39 @@ export function useTypedRoute<T extends keyof RouteParamList>() {
  */
 
 // Function to navigate and reset navigation state
+// function navigateAndReset<T extends keyof RouteParamList>(
+//   name: T,
+//   params?: RouteParamList[T]
+// ) {
+//   if (navigationRef.isReady()) {
+
+//     navigationRef.resetRoot({
+//       index: 0,
+//       routes: [{ name, params }],
+//     });
+//     //   CommonActions.reset({
+//     //     index: 0,
+//     //     routes: [{ name, params }],
+//     //   })
+//     // );
+//   } else {
+//     console.error("Navigation ref is not ready.");
+//   }
+// }
+
 function navigateAndReset<T extends keyof RouteParamList>(
   name: T,
-  params?: RouteParamList[T]
+  params?: any
 ) {
   if (navigationRef.isReady()) {
-
     navigationRef.resetRoot({
       index: 0,
       routes: [{ name, params }],
     });
-
-    // navigationRef.dispatch(
-    //   CommonActions.reset({
-    //     index: 0,
-    //     routes: [{ name, params }],
-    //   })
-    // );
   } else {
-    console.error("Navigation ref is not ready.");
+    console.error('Navigation ref is not ready.');
   }
 }
-
 /**
  * Pops the top screen from the stack.
  */

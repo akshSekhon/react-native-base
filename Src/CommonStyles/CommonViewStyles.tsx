@@ -34,6 +34,13 @@ export const getComnViewStyles = (context: typeof ThemeContext) => {
             alignItems: 'center',
             justifyContent: 'center',
         },
+        absolute0: {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+        },
         button: {
             borderRadius: 10,
             // height: moderateScaleVertical(45),

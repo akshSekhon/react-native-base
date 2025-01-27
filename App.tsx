@@ -30,6 +30,9 @@ import { APPEnvironment } from './Src/Services/Networking';
 
 import { notificationListener, requestUserPermission } from './Src/Services/Firebase/NotificationService';
 import Splash from './Src/Screens/OnBoarding/SplashScreen';
+import { UserProvider } from './Src/Providers/UserProvider';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './Src/Navigations/NavigationService';
 // import { notificationListener, requestUserPermission } from './Src/Services/Notification/NotificationServices';
 export let currentEnv: APPEnvironment = 'DEV'
 
@@ -64,16 +67,22 @@ function App(): React.JSX.Element {
       <SafeAreaProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Provider store={store}>
-            <ThemeProvider>
+            <UserProvider>
+              <ThemeProvider>
+                <>
+                  <NavigationContainer ref={navigationRef}>
+                    <Routes />
+                  </NavigationContainer>
+                </>
 
-              <Routes />
 
-              {/* {!loading &&
+                {/* {!loading &&
                 <Routes />
               } */}
-              {/* <Splash /> */}
+                {/* <Splash /> */}
 
-            </ThemeProvider>
+              </ThemeProvider>
+            </UserProvider>
           </Provider>
         </GestureHandlerRootView>
       </SafeAreaProvider>

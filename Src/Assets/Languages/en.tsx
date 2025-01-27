@@ -91,5 +91,7 @@ export default {
     Budget: 'Budget',
     deliverables: 'deliverables',
     Proposals: 'Proposals',
-
+    Send_Connection_Request: 'Send Connection Request',
+    Products: 'Products',
+    Projects: 'Projects'
 }

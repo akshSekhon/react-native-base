@@ -24,6 +24,12 @@ const styles = StyleSheet.create({
         // fontWeight: '800',
         fontFamily: fontFamily.Inter_Bold_18
     },
+    sz10_wt600: {
+        ...baseTextStyle,
+        fontSize: textScale(10),
+        // fontWeight: '600',
+        fontFamily: fontFamily.Inter_SemiBold_18
+    },
     sz16_wt600: {
         ...baseTextStyle,
         fontSize: textScale(16),
@@ -98,6 +104,10 @@ export const getTextStyles = (context: typeof ThemeContext) => {
         },
         title_large: {
             ...styles.sz24_wt600,
+            color: colors.txt_heading,
+        },
+        actn_x_small: {
+            ...styles.sz10_wt600,
             color: colors.txt_heading,
         },
         actn_large: {

@@ -16,6 +16,7 @@ import {
 import socket from '../../Services/Networking/SocketHandler/socket';
 import { store } from '..';
 import { showToastMessage } from '../../Utils';
+import { NavScreen } from '../../Navigations/navigations';
 
 // -- MARK: --Send Otp for login
 // export const apiReqLogin = async (prarams: SendOTPParams) => {
@@ -608,7 +609,7 @@ export const deleteUserLoginData = dispatchable(() => {
                 socket.disconnectSocket()
                 // socket.removeListener()
                 dispatch(actions['user/set-user'](null));
-                navigateAndReset('Login')
+                navigateAndReset('authStack', { screen: NavScreen.Welcome })
                 return {
                     success: true,
                 };

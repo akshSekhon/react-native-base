@@ -20,14 +20,14 @@ import Touchable from '../../Components/Touchable'
 import ImageHelper from '../../Assets/Gallery/ImageHelper'
 import BackButton from '../../Components/BackButton'
 import { navigateAndReset, pushTo } from '../../Navigations/NavigationService'
+import { useUser } from '../../Providers/UserProvider'
 
 const Login: FC<any> = () => {
     const { lang, colors, comnViewStyles, textStyles } = getStyles(ThemeContext)
     const isFocused = useIsFocused()
-    const [profileType, setProfileType] = React.useState<UserType | string>();
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation()
-
+    const { profileType } = useUser()
 
     useEffect(() => {
         SystemNavigationBar.setNavigationColor(colors.appBg, 'light', 'navigation')
@@ -53,14 +53,19 @@ const Login: FC<any> = () => {
         // navigation.dispatch(
         //     StackActions.replace('TabNavigator', { user: 'Wojtek' })
         // );
-        setTimeout(() => {
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [{ name: 'TabNavigator', params: undefined }],
-                })
-            );
-        }, 100);
+        if (profileType == 'brand') {
+            navigateAndReset('brandStack')
+        } else {
+            navigateAndReset('createrStack')
+        }
+        // setTimeout(() => {
+        //     navigation.dispatch(
+        //         CommonActions.reset({
+        //             index: 0,
+        //             routes: [{ name: 'TabNavigator', params: undefined }],
+        //         })
+        //     );
+        // }, 100);
 
     }
 

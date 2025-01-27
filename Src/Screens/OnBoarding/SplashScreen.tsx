@@ -11,10 +11,12 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { ThemeContext } from '../../Providers/ThemeProvider';
 import { getStyles } from '../../CommonStyles';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { fontFamily } from '../../Assets/Fonts/FontFamily';
 import AppLogo from '../../Components/AppLogo';
-import { pushTo } from '../../Navigations/NavigationService';
+import { navigateAndReset, navigationRef, pushTo } from '../../Navigations/NavigationService';
+import { RouteStackParams } from '../../Navigations/routes.type';
+import { NavScreen } from '../../Navigations/navigations';
 
 // create a component
 interface SplashScreen {
@@ -22,6 +24,7 @@ interface SplashScreen {
 const SplashScreen = () => {
     const { lang, colors, textStyles, comnViewStyles } = getStyles(ThemeContext);
     const isFocused = useIsFocused()
+    const navigation = useNavigation()
     // useEffect(() => {
     //     SystemNavigationBar.setNavigationColor(colors.themeBlue, 'light', 'navigation')
     //     return () => {
@@ -31,7 +34,7 @@ const SplashScreen = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            pushTo('Welcome')
+            navigateAndReset('authStack', { screen: NavScreen.Welcome })
         }, 1000);
     })
 
@@ -75,7 +78,7 @@ const SplashScreen = () => {
         <WrapperContainer
             isBacgroundImage={false}
         >
-            <View style={{ ...styles.container, backgroundColor: colors.themeBlue }}>
+            <View style={{ ...styles.container, }}>
                 <AppLogo />
             </View>
         </WrapperContainer>

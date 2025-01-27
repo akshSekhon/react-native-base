@@ -24,7 +24,6 @@ import { pushTo } from '../../Navigations/NavigationService'
 const SignUp: FC<any> = () => {
     const { lang, colors, comnViewStyles, textStyles } = getStyles(ThemeContext)
     const isFocused = useIsFocused()
-    const [profileType, setProfileType] = React.useState<UserType | string>();
     const [loading, setLoading] = useState(false);
 
 

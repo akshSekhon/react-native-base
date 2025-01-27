@@ -98,54 +98,52 @@ const WrapperContainer: FC<WrapperContainerProps> = ({
 
   const contentView = () => {
     return (
-      <>
-        <View style={{
-          flex: 1,
-          backgroundColor: isBacgroundImage ? colors.transparent : navBarColor ?? bgColor,
-        }}>
-          {issafeAreaView &&
-            <View style={{
-              height: inset.top,
-              backgroundColor: isBacgroundImage ? colors.transparent : navBarColor ?? bgColor,
-              ...safeAreaViewStyle
-            }} />
-          }
-          {renderHeader && renderHeader}
-          {/* <FlashMessage position="top" style={{ top: moderateScaleVertical(0)}} /> */}
-          <Loader isLoading={isLoading} />
-          <View
-            pointerEvents={pointerEvents}
-            style={{
-              ...styles.container,
-              paddingHorizontal: paddingAvailable ? moderateScale(16) : 0,
-              // paddingBottom: Platform.OS == 'ios' && isBottomPadding ? inset.bottom : 0,
-              backgroundColor: bgColorSet,
-              paddingTop: isPaddingTop ? inset.top : null,
-              paddingBottom: inset.bottom,
-              ...mainViewStyle,
-            }}
-          >
 
-            {statusBarAvailable ? (
-              <StatusBar
-                networkActivityIndicatorVisible={isSafeAreaAvailable}
-                translucent={!isSafeAreaAvailable}
-                backgroundColor={isSafeAreaAvailable ? colors.transparent : colors.transparent}
-                barStyle={topBarStyle}
-                showHideTransition={"slide"}
-                animated
-                hidden={false}
-              />
-            ) : (
-              <></>
-            )}
+      <View style={{
+        flex: 1,
+        backgroundColor: isBacgroundImage ? colors.transparent : navBarColor ?? bgColor,
+      }}>
+        {issafeAreaView &&
+          <View style={{
+            height: inset.top,
+            backgroundColor: isBacgroundImage ? colors.transparent : navBarColor ?? bgColor,
+            ...safeAreaViewStyle
+          }} />
+        }
+        {renderHeader && renderHeader}
+        {/* <FlashMessage position="top" style={{ top: moderateScaleVertical(0)}} /> */}
+        <Loader isLoading={isLoading} />
+        <View
+          pointerEvents={pointerEvents}
+          style={{
+            ...styles.container,
+            paddingHorizontal: paddingAvailable ? moderateScale(16) : 0,
+            // paddingBottom: Platform.OS == 'ios' && isBottomPadding ? inset.bottom : 0,
+            backgroundColor: bgColorSet,
+            paddingTop: isPaddingTop ? inset.top : null,
+            paddingBottom: inset.bottom,
+            ...mainViewStyle,
+          }}
+        >
 
-            {onlyScrollViewAvailable ? WithOnlyScrollView() : children}
+          {statusBarAvailable ? (
+            <StatusBar
+              networkActivityIndicatorVisible={isSafeAreaAvailable}
+              translucent={!isSafeAreaAvailable}
+              backgroundColor={isSafeAreaAvailable ? colors.transparent : colors.transparent}
+              barStyle={topBarStyle}
+              showHideTransition={"slide"}
+              animated
+              hidden={false}
+            />
+          ) : (
+            <></>
+          )}
 
-          </View>
+          {onlyScrollViewAvailable ? WithOnlyScrollView() : children}
+
         </View>
-        {/* </SafeAreaView> */}
-      </>
+      </View>
     );
   };
 

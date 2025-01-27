@@ -1,24 +1,16 @@
 import { useIsFocused } from '@react-navigation/native'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { FlatList, Image, ListRenderItemInfo, StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import SystemNavigationBar from 'react-native-system-navigation-bar'
-import ImageHelper from '../../Assets/Gallery/ImageHelper'
-import { getStyles } from '../../CommonStyles'
-import { shadowBox } from '../../CommonStyles/CommonViewStyles'
-import { moderateScale, moderateScaleVertical } from '../../CommonStyles/responsiveSize'
-import { WrapperContainer } from '../../Components'
-import CustomButton from '../../Components/CustomButton'
-import TabbarHeader from '../../Components/Headers/TabbarHeader'
-import LineView from '../../Components/LineView'
-import LoaderImage from '../../Components/LoaderImage'
-import { RadialGradientView } from '../../Components/RadialGradientView'
-import SearchBar from '../../Components/SearchBar'
-import SegmentView from '../../Components/SegmentView'
-import Text_N from '../../Components/TextComponents/Text_N'
-import WishlistButton from '../../Components/WishlistButton'
-import { ThemeContext } from '../../Providers/ThemeProvider'
-import ProjectItemCard from './Components/ProjectItemCard'
+import { getStyles } from '../../../CommonStyles/index'
+import { shadowBox } from '../../../CommonStyles/CommonViewStyles'
+import { moderateScale, moderateScaleVertical } from '../../../CommonStyles/responsiveSize'
+import { WishlistButton, RadialGradientView, WrapperContainer, CustomButton, TabbarHeader, LineView, LoaderImage, SegmentView, Text_N } from '../../../Components/index'
+import { ThemeContext } from '../../../Providers/ThemeProvider'
+import { useUser } from '../../../Providers/UserProvider'
+import ProjectItemCard from '../SharedComponents/ProjectItemCard'
+import ImageHelper from '../../../Assets/Gallery/ImageHelper'
 
 const MakeConnectionsView = () => {
     const { lang, colors, textStyles, comnViewStyles } = getStyles(ThemeContext)
@@ -69,6 +61,7 @@ const MakeConnectionsView = () => {
 
 const HomeTabScreen: FC<any> = () => {
     const { lang, colors, textStyles, comnViewStyles } = getStyles(ThemeContext)
+    const [selectedTab, setSelectedTab] = useState({ title: lang.Best_Matches, id: 0 })
     const isFocused = useIsFocused()
     useEffect(() => {
         SystemNavigationBar.setNavigationColor(colors.appBg, 'light', 'navigation')
@@ -81,6 +74,10 @@ const HomeTabScreen: FC<any> = () => {
         { id: 3, icon: ImageHelper.temp.beardo, image: ImageHelper.temp.product4 },
         { id: 4, icon: ImageHelper.temp.villain, image: ImageHelper.temp.product5 },
     ]
+
+    const { profileType } = useUser()
+    console.log('profileType Brand is :----', profileType);
+
     const brandItem = ({ item }) => {
         return (
             <View>
@@ -147,7 +144,7 @@ const HomeTabScreen: FC<any> = () => {
                         <WishlistButton />
                     </View>
                 </View>
-                <Animated.FlatList
+                <FlatList
                     stickyHeaderIndices={[1]}
                     stickyHeaderHiddenOnScroll
                     contentContainerStyle={{
@@ -182,7 +179,8 @@ const HomeTabScreen: FC<any> = () => {
                             return (
                                 <View style={{ ...comnViewStyles.hzPadContainer, backgroundColor: colors.appBg }}>
                                     <SegmentView
-                                        defaultSelected={{ title: lang.Best_Matches, id: 0 }}
+                                        defaultSelected={selectedTab}
+                                        onSelectItem={(item) => setSelectedTab(item)}
                                         tabItems={[
                                             { title: lang.Best_Matches, id: 0 },
                                             { title: lang.Open_Projects, id: 1 },
@@ -190,15 +188,15 @@ const HomeTabScreen: FC<any> = () => {
                                     />
                                 </View>
                             );
-                        } else if (item.type === 'horizList') {
+                        } else if (item.type === 'brandList') {
                             return <BrandListView />
                         }
 
                         return projectItem(item);
                     }}
                     // data={Array(100)}
-                    data={[{ type: 'segment' }, { type: 'horizList' }, ...Array(2).fill({ type: 'item' })]}
-                    renderScrollComponent={(props) => <Animated.ScrollView {...props} />} // For animations
+                    data={selectedTab.id == 0 ? [{ type: 'segment' }, ...Array(2).fill({ type: 'item' })] : [{ type: 'segment' }, { type: 'brandList' }, ...Array(2).fill({ type: 'item' })]}
+                // renderScrollComponent={(props) => <Animated.ScrollView {...props} />} // For animations
                 />
             </View>
             {/* </CustomScrollView> */}

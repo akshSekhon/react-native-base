@@ -1,5 +1,6 @@
 
 import * as SplashScreen from './OnBoarding/SplashScreen'
 import * as Auth from './Authentication'
-import * as CreaterRoute from './CreaterRoute'
-export { SplashScreen, Auth, CreaterRoute }
+import * as Creater from './Main/Creater'
+import * as Brand from './Main/Brand'
+export { SplashScreen, Auth, Creater, Brand }

@@ -27,7 +27,7 @@ interface Props {
     radialValues: RadialProps,
 }
 
-export const RadialGradientView: FC<Props> = ({ children, radialValues: { colorList, x, y, rx, ry, }, ...props }) => {
+const RadialGradientView: FC<Props> = ({ children, radialValues: { colorList, x, y, rx, ry, }, ...props }) => {
     return (
         <View style={[styles.container, props?.style]}>
             <View style={StyleSheet.absoluteFill}>
@@ -58,6 +58,7 @@ export const RadialGradientView: FC<Props> = ({ children, radialValues: { colorL
         </View>
     );
 };
+export default RadialGradientView
 // define your styles
 const styles = StyleSheet.create({
     container: {

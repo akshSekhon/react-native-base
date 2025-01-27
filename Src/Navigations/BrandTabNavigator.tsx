@@ -4,11 +4,11 @@ import React, { useEffect } from 'react';
 // import TabBarComponent from '../Components/TabBarComponent';
 import { useIsFocused } from '@react-navigation/native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
-import { getStyles } from '../CommonStyles';
-import { scale } from '../CommonStyles/responsiveSize';
+import { getStyles } from '../CommonStyles/index.tsx';
+import { scale } from '../CommonStyles/responsiveSize.tsx';
 // import TabBarComponent from '../Components/Tabbar/TabBarComponent';
 import { ThemeContext } from '../Providers/ThemeProvider.tsx';
-import { TabBarRouteList } from './routes.type';
+import { BrandTabRouteList, TabBarRouteList } from './routes.type.ts';
 import { Modules } from '../index.tsx';
 import ImageHelper from '../Assets/Gallery/ImageHelper.tsx';
 import TabBarComponent from '../Components/Tabbar/TabBarComponent.tsx';
@@ -18,11 +18,11 @@ import { View } from 'react-native';
 
 
 
-const Tab = createBottomTabNavigator<TabBarRouteList>();
+const Tab = createBottomTabNavigator<BrandTabRouteList>();
 // create a component
-const TabNavigator = () => {
+const BrandTabNavigator = () => {
     const { colors, comnViewStyles, textStyles, lang } = getStyles(ThemeContext)
-    const activeRoute = Modules.CreaterRoute
+    const activeRoute = Modules.Brand
     return (
         //TabBarComponent {...props}
         <Tab.Navigator
@@ -39,7 +39,6 @@ const TabNavigator = () => {
                 options={{
                     title: lang.Home,
                     tabBarHideOnKeyboard: true,
-                    // unmountOnBlur: false
                 }}
                 name={'Home'}
 
@@ -48,7 +47,6 @@ const TabNavigator = () => {
                 initialParams={{
                     name: lang.Home,
                     icon: ImageHelper.svgs.tabSvgs.Home,
-                    // selectedIcon: ImageHelper.SVG.HomeTab_Selected,
                 }}
             />
             <Tab.Screen
@@ -96,4 +94,4 @@ const TabNavigator = () => {
 };
 
 //make this component available to the app
-export default TabNavigator;
+export default BrandTabNavigator;

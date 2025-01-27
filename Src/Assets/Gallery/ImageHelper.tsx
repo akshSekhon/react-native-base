@@ -25,6 +25,7 @@ import product2 from './TempImage/product2.png';
 import product3 from './TempImage/product3.png';
 import product4 from './TempImage/product4.png';
 import product5 from './TempImage/product5.png';
+import product6 from './TempImage/product6.png';
 
 
 
@@ -43,6 +44,9 @@ import Facebook from './Svg/Brands/Facebook.svg';
 import Heart_Fill from './Svg/Heart_Fill.svg';
 import Heart_Unfill from './Svg/Heart_Unfill.svg';
 import GradiantBg from './Svg/GradiantBg.svg';
+
+import RadioButton_On from './Svg/radio-button-on.svg';
+import RadioButton_Off from './Svg/radio-button-off.svg';
 
 // MARK:- TAB ICONS
 
@@ -89,8 +93,8 @@ const svgs = {
     Heart_Fill,
     Heart_Unfill,
     GradiantBg,
-
-
+    RadioButton_On,
+    RadioButton_Off,
 }
 
 const placeHolders = {
@@ -113,5 +117,6 @@ const temp = {
     product3,
     product4,
     product5,
+    product6
 }
 export default { svgs, placeHolders, icons, lottey, temp, pngs }

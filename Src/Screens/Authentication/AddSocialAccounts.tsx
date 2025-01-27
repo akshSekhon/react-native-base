@@ -20,14 +20,14 @@ import Touchable from '../../Components/Touchable'
 import { CustomUseEffect } from '../../Utils/Hooks/CustomUseEffect'
 import BackButton from '../../Components/BackButton'
 import { goBack, navigateAndReset } from '../../Navigations/NavigationService'
+import { useUser } from '../../Providers/UserProvider'
 
 const AddSocialAccounts: FC<any> = () => {
     const { lang, colors, comnViewStyles, textStyles } = getStyles(ThemeContext)
     const isFocused = useIsFocused()
-    const [profileType, setProfileType] = React.useState<UserType | string>();
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation()
-
+    const { profileType } = useUser()
     useEffect(() => {
         SystemNavigationBar.setNavigationColor(colors.appBg, 'light', 'navigation')
     }, [isFocused]);
@@ -63,13 +63,17 @@ const AddSocialAccounts: FC<any> = () => {
             setCurrentScreen(currentScreen + 1)
         } else {
             // pushTo('Welcome')
-            // navigateAndReset('TabNavigator')
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [{ name: 'TabNavigator', params: undefined }],
-                })
-            );
+            if (profileType == 'brand') {
+                navigateAndReset('brandStack')
+            } else {
+                navigateAndReset('createrStack')
+            }
+            // navigation.dispatch(
+            //     CommonActions.reset({
+            //         index: 0,
+            //         routes: [{ name: 'TabNavigator', params: undefined }],
+            //     })
+            // );
         }
     }
 

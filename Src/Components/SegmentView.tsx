@@ -23,14 +23,14 @@ interface TabItem {
 
 interface Props {
     containerStyle?: ViewStyle;
-    onSelectItem?: (tab: TabItem) => void;
+    onSelectItem?: (tab?: TabItem) => void;
     tabItems: TabItem[];
     tabStyle?: ViewStyle;
     titleStyle?: TextStyle;
     defaultSelected?: TabItem;
 }
 
-const SegmentView: React.FC<Props> = ({ containerStyle, onSelectItem, tabItems, tabStyle, titleStyle, defaultSelected }) => {
+const SegmentView: React.FC<Props> = ({ containerStyle, onSelectItem = () => { }, tabItems, tabStyle, titleStyle, defaultSelected }) => {
 
     const { colors, textStyles } = getStyles(ThemeContext); // Assuming you have ThemeContext
     const [selectedTab, setSelectedTab] = useState<TabItem | undefined>(defaultSelected);
@@ -64,10 +64,11 @@ const SegmentView: React.FC<Props> = ({ containerStyle, onSelectItem, tabItems, 
             offset.value = tabLayout.x;
             width.value = tabLayout.width;
         }
+        console.log();
 
-        if (onSelectItem) {
-            onSelectItem(tab);
-        }
+        // if (onSelectItem) {
+        onSelectItem(tab);
+        // }
     };
 
     const handleLayout = (event: LayoutChangeEvent, index: number) => {

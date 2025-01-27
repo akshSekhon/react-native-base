@@ -1,9 +1,9 @@
-import React, { createContext, FC, useEffect, useState } from 'react';
+import React, { createContext, FC, useContext, useEffect, useState } from 'react';
 import appColors from '../Assets/Colors';
 import strings from '../Assets/Languages';
 import { RouteParamList } from '../Navigations/routes.type';
 
-export interface ThemeProviderExtraData{
+export interface ThemeProviderExtraData {
     prevousScreen?: keyof RouteParamList | undefined
 }
 
@@ -27,27 +27,36 @@ export const ThemeContext = createContext<ThemeProviderType>({
 });
 
 export const ThemeProvider: FC<Props> = ({ children }) => {
-    const [theme, setTheme] = useState<Omit<ThemeProviderType, 'changeTheme' |'updateExtraData'>>({
+    const [theme, setTheme] = useState<Omit<ThemeProviderType, 'changeTheme' | 'updateExtraData'>>({
         colors: appColors,
         lang: strings,
     });
-    const [extraData, setExtraData] = useState <ThemeProviderExtraData>({
-       prevousScreen:undefined
+    const [extraData, setExtraData] = useState<ThemeProviderExtraData>({
+        prevousScreen: undefined
     });
-    
+
     const changeTheme = (newTheme: Omit<ThemeProviderType, 'changeTheme' | 'updateExtraData'>) => {
         setTheme(newTheme);
     };
-useEffect(()=>{
+    useEffect(() => {
 
-})
+    })
     const updateExtraData = <T extends keyof ThemeProviderExtraData>(updatedKey: T, data: ThemeProviderExtraData[T] | undefined) => {
-        setExtraData((pre) => ({...pre, [updatedKey]:data}));
+        setExtraData((pre) => ({ ...pre, [updatedKey]: data }));
     };
 
     return (
         <ThemeContext.Provider value={{ ...theme, extraData, changeTheme, updateExtraData }}>
-                {children}
+            {children}
         </ThemeContext.Provider>
     );
+};
+
+
+export const useAppTheme = (): ThemeProviderType => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error("useUser must be used within a UserProvider");
+    }
+    return context;
 };

@@ -1,11 +1,17 @@
-export enum NaviScreen {
-    onBoarding = 'OnBoarding',
-    SignUp = 'SignUp',
+// declare global {
+export enum NavScreen {
+    Welcome = 'Welcome',
+    SplashScreen = 'Welcome',
+    authStack = 'authStack',
+    createrStack = 'AddSocialAccounts',
+    brandStack = 'UserSignInCompleted',
     Login = 'Login',
-    enterOTP = 'EnterOTP',
+    SignUp = 'SignUp',
+    AddSocialAccounts = 'AddSocialAccounts',
     userSignInCompleted = 'UserSignInCompleted',
     CreateProfile = 'CreateProfile',
-    
-} 
-
-
+    BrandTabNavigator = 'BrandTabNavigator',
+    CreaterTabNavigator = 'CreaterTabNavigator',
+}
+// }
+// export { };

@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { FC, useEffect } from 'react'
-import { getStyles } from '../../CommonStyles'
-import { ThemeContext } from '../../Providers/ThemeProvider'
-import { WrapperContainer } from '../../Components'
+import { getStyles } from '../../../CommonStyles'
+import { ThemeContext } from '../../../Providers/ThemeProvider'
+import { WrapperContainer } from '../../../Components'
 import SystemNavigationBar from 'react-native-system-navigation-bar'
 import { useIsFocused } from '@react-navigation/native'
 
-const CommunityTabSceen: FC<any> = () => {
+const MyProjectsTabScreen: FC<any> = () => {
     const { lang, colors } = getStyles(ThemeContext)
     const isFocused = useIsFocused()
     useEffect(() => {
@@ -19,14 +19,14 @@ const CommunityTabSceen: FC<any> = () => {
             <View
                 style={styles.container}
             >
-                <Text>Community</Text>
+                <Text>My Projects</Text>
             </View>
         </WrapperContainer>
 
     )
 }
 
-export default CommunityTabSceen
+export default MyProjectsTabScreen
 
 const styles = StyleSheet.create({
     container: {
